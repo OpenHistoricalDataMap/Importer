@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Importer</title>
+    </head>
+    <body>
+        <hr>Zum Import bitte Info eingeben:<br />
+        <hr />
+
+        <form method="Post" name="Import" action="Imports/Import"  enctype="multipart/form-data" >
+            Import Type: <select id="combobox" class="mySelect" name="Type" onchange="change(this.value)">
+                <option value="Content">Content</option>
+                <option value="URL">URL</option>
+                <option value="Geometry">Geometry</option>
+                <option value="GeoObject">GeoObject</option>
+            </select><br/>
+            ObjectID: <input type="text" name="ObjectID" /><br />
+            Valid Since: <input type="date" name="Valid-Since" /><br />
+            Valid Until: <input type="date" name="Valid-Until" /><br />
+            <div id="URL" style="display: none;">
+                URL: <input type="text" name="URL" /><br /></div>
+            <div id="file" style="display: inline;">
+                File: <input  name="file" type="file" > <br /></div>
+            <div id="JSON" style="display: none;">
+                JSON :  <textarea class="input" name="JSON" rows="5" cols="30" ></textarea><br /></div>
+            <input type="submit" value="submit" />
+            <input type="reset" value="reset" />
+        </form>
+        <script>
+            function change(value) {
+                var selectBox = document.getElementById("combobox");
+                var selected = selectBox.options[selectBox.selectedIndex].value;
+                var file = document.getElementById("file");
+                var URL = document.getElementById("URL");
+                var JSON = document.getElementById("JSON");
+                if (selected == 'URL') {
+                    URL.style.display = 'inline';
+                    file.style.display = 'none';
+                    JSON.style.display = 'none';
+                } else if (selected == 'Content') {
+                    URL.style.display = 'none';
+                    file.style.display = 'inline';
+                    JSON.style.display = 'none';
+                } else {
+                    URL.style.display = 'none';
+                    file.style.display = 'none';
+                    JSON.style.display = 'inline';
+                }
+            }
+        </script>
+    </body>
+</html>
+
+
