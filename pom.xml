@@ -21,6 +21,21 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.postgis</groupId>
+            <artifactId>postgis-jdbc</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.1.4</version>
+        </dependency>
     </dependencies>
 
     <build>

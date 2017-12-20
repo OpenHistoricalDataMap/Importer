@@ -1,6 +1,10 @@
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,9 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 public class Import extends HttpServlet {
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
@@ -29,6 +32,18 @@ public class Import extends HttpServlet {
         String OSM_Feature_Value = request.getParameter("OSM_Feature_Value");
         String JSON = request.getParameter("JSON");
 
+        JSONController jSONController = new JSONController();
+        try {
+            jSONController.parserJSON(JSON);
+            out.print("Successfully Imported...");
+        } catch (SQLException ex) {
+            Logger.getLogger(Import.class.getName()).log(Level.SEVERE, null, ex);
+            out.print("Error ..." + ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Import.class.getName()).log(Level.SEVERE, null, ex);
+            out.print("Error ..." + ex);
+        }
+        /*
         out.print("Successfully Imported...");
         out.print("<br/>ObjectName: " + ObjectName);
         out.print("<br/>UserID: " + UserID);
@@ -36,7 +51,7 @@ public class Import extends HttpServlet {
         out.print("<br/>Valid Until: " + validUntil);
         out.print("<br/>OSM_Feature_Name: " + OSM_Feature_Name);
         out.print("<br/>OSM_Feature_Value: " + OSM_Feature_Value);
-        out.print("<br/>JSON: " + JSON);
+        out.print("<br/>JSON: " + JSON);*/
         out.close();
 
     }
