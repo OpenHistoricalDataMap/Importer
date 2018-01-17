@@ -76,7 +76,13 @@ public class JSONController {
             jsonParts[i] = jsonParts[i].replaceAll(",", " ");
         }
         String jsonJoined = String.join(",", jsonParts);
-        return "GeomFromEWKT('" + type + "((" + jsonJoined + "))')";
+        String result = "";
+        if (type.equalsIgnoreCase("Polygon")) {
+            result = "GeomFromEWKT('" + type + "((" + jsonJoined + "))')";
+        } else {
+            result = "GeomFromEWKT('" + type + "(" + jsonJoined + ")')";
+        }
+        return result;
     }
 
 }

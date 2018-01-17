@@ -1,7 +1,20 @@
 {"type":"FeatureCollection",
-"totalFeatures":2,
+"totalFeatures":3,
 "features":
 [
+{"type":"Feature",
+"geometry":{
+"type":"Point",
+"coordinates":[125.6, 10.1]
+},
+"properties":
+{"geom_id":"-1",
+"name":"HTW-Berlin7",
+"userId": "15",
+"valid_since":"2016-03-18",
+"valid_until":"2017-03-30",
+"osm_feature_name": "bulding",
+"osm_feature_value": "apatment"}},
 {"type":"Feature",
 "geometry":{
 "type":"LineString",
@@ -51,10 +64,10 @@
 [1015365.4024644668,6599812.31798718],
 [1015370.5788207878,6599806.284205312],
 [1015384.3045140023,6599775.233234177],
-[1015386.7646747497,6599763.8361457875]
+[1015386.7646747497,6599763.8361457875],
+[1013953.8379253603,6601397.644710859]
 ]]
 },
-"geometry_name":"line",
 "properties":
 {"geom_id":"-1",
 "name":"HTW-Berlin7",

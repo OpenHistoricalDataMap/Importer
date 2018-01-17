@@ -153,11 +153,11 @@ public class GisConn {
     }
 
     public int addLine(String line, String userID) throws SQLException {
-        try (PreparedStatement statement = conn.prepareStatement("INSERT INTO " + schema + ".lines(line, source_user_id)\n"
-                + "VALUES (" + line + ",' " + userID + "');", Statement.RETURN_GENERATED_KEYS);) {
+        String sqlStatement = "INSERT INTO " + schema + ".lines(line, source_user_id) VALUES (" + line + ",' " + userID + "');";
+        try (PreparedStatement statement = conn.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);) {
             if (showSQL) {
 //            System.out.println("INSERT INTO " + schema + ".points(point, source_user_id) VALUES (" + point + ", '" + userID + "');");
-                System.out.println(statement);
+                System.out.println(sqlStatement);
             }
             int affectedRows = statement.executeUpdate();
 
@@ -176,12 +176,13 @@ public class GisConn {
     }
 
     public int addPolygon(String polygon, String userID) throws SQLException {
-        try (PreparedStatement statement = conn.prepareStatement("INSERT INTO " + schema + ".polygons(polygon, source_user_id)\n"
-                + "VALUES (" + polygon + ", '" + userID + "');", Statement.RETURN_GENERATED_KEYS);) {
+          String sqlStatement ="INSERT INTO " + schema + ".polygons(polygon, source_user_id) VALUES (" + polygon + ", '" + userID + "');";
+      
+        try (PreparedStatement statement = conn.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);) {
 
             if (showSQL) {
 //            System.out.println("INSERT INTO " + schema + ".points(point, source_user_id) VALUES (" + point + ", '" + userID + "');");
-                System.out.println(statement);
+                System.out.println(sqlStatement);
             }
             
             int affectedRows = statement.executeUpdate();
