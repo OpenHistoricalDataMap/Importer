@@ -2,6 +2,10 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -29,8 +33,7 @@ public class JSONController {
             gisconn.setConn();
 
             // read the json file
-           // FileReader reader = new FileReader("GEO.json");
-
+            // FileReader reader = new FileReader("GEO.json");
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonText);
 
@@ -41,7 +44,7 @@ public class JSONController {
 
                 JSONObject geometry = (JSONObject) feature.get("geometry");
                 JSONObject properties = (JSONObject) feature.get("properties");
-                type = geometry.get("type").toString();
+                type = geometry.get("type").toString().toUpperCase();
                 coordinates = geometry.get("coordinates").toString();
                 geom_id = Integer.parseInt(properties.get("geom_id").toString());
                 userId = properties.get("userId").toString();
@@ -73,7 +76,7 @@ public class JSONController {
             jsonParts[i] = jsonParts[i].replaceAll(",", " ");
         }
         String jsonJoined = String.join(",", jsonParts);
-        return "ST_GeometryFromText('" + type + "((" + jsonJoined + "))')";
+        return "GeomFromEWKT('" + type + "((" + jsonJoined + "))')";
     }
 
 }
