@@ -176,15 +176,15 @@ public class GisConn {
     }
 
     public int addPolygon(String polygon, String userID) throws SQLException {
-          String sqlStatement ="INSERT INTO " + schema + ".polygons(polygon, source_user_id) VALUES (" + polygon + ", '" + userID + "');";
-      
+        String sqlStatement = "INSERT INTO " + schema + ".polygons(polygon, source_user_id) VALUES (" + polygon + ", '" + userID + "');";
+
         try (PreparedStatement statement = conn.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);) {
 
             if (showSQL) {
 //            System.out.println("INSERT INTO " + schema + ".points(point, source_user_id) VALUES (" + point + ", '" + userID + "');");
                 System.out.println(sqlStatement);
             }
-            
+
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows == 0) {
@@ -202,28 +202,12 @@ public class GisConn {
     }
 
     public void addGeoobject_Geometry(int targetID, int targetTypeID, int geoobjectID, int classificationID, String valid_since, String valid_until, String userID) throws SQLException, ParseException {
-        PreparedStatement statement = conn.prepareStatement("INSERT INTO " + schema + ".geoobject_geometry(id_target, type_target, id_geoobject_source, classification_id, valid_since, valid_until, source_user_id)\n"
-                + "VALUES (" + targetID + ", " + targetTypeID + ", " + geoobjectID + ", " + classificationID + ", ?, ?, " + userID + ");");
-        statement.setDate(1, textToDate(valid_until));
-        statement.setDate(2, textToDate(valid_until));
+        String sqlStatement = "INSERT INTO " + schema + ".geoobject_geometry(id_target, type_target, id_geoobject_source, classification_id, valid_since, valid_until, source_user_id) VALUES (" + targetID + ", " + targetTypeID + ", " + geoobjectID + ", " + classificationID + ", '"+valid_since+"', '"+valid_until+"', " + userID + ");";
+        if (showSQL) {
+           System.out.println(sqlStatement);
+        }
+        PreparedStatement statement = conn.prepareStatement(sqlStatement);
         statement.executeUpdate();
 
     }
-
-    public java.sql.Date textToDate(String sdate) throws ParseException {
-        /*  DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-        Date date = format.parse(sdate);
-        java.sql.Date sqlDate = null;
-        sqlDate.setYear(date.getYear());
-        sqlDate.getMonth(date.getYear());
-        sqlDate.setYear(date.getYear());
-        System.out.println(sqlDate); 
-         */
-        String startDate = "01-02-2013";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date date = format.parse(startDate);
-        java.sql.Date sqlDate = new java.sql.Date(date.getDate());
-        return sqlDate;
-    }
-
 }
