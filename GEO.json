@@ -10,7 +10,7 @@
 "properties":
 {"geom_id":"-1",
 "name":"HTW-Berlin7",
-"userId": "15",
+"userId": "92",
 "valid_since":"2016-03-18",
 "valid_until":"2017-03-30",
 "osm_feature_name": "bulding",
@@ -71,7 +71,7 @@
 "properties":
 {"geom_id":"-1",
 "name":"HTW-Berlin7",
-"userId": "15",
+"userId": "2020",
 "valid_since":"2016-03-18",
 "valid_until":"2017-03-30",
 "osm_feature_name": "bulding",

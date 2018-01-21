@@ -1,5 +1,4 @@
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -13,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Smady91
+ * @author Nabeel smadi
+ * @author Khaled Halabieh
+ * 
  */
 @WebServlet("/Import")
 public class Import extends HttpServlet {
@@ -25,7 +26,12 @@ public class Import extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         String JSON = request.getParameter("JSON");
-
+        
+         t();
+     
+ 
+        
+        
         JSONController jSONController = new JSONController();
         try {
             jSONController.parserJSON(JSON);
@@ -40,5 +46,12 @@ public class Import extends HttpServlet {
         out.close();
 
     }
+    
+    public static void t(){
+        System.out.println("tttttttttttttteeeeeeeeeeeeeeesssssssssssssttttttttttt");
+           test t1= new test();
+       t1.start();
+    }
 
+    
 }

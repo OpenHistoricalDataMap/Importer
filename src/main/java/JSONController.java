@@ -12,6 +12,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
+
 public class JSONController {
 
     private String type = null;
@@ -27,6 +29,16 @@ public class JSONController {
     private int lastGeoobjectID = -2;
     private String lastGeoobjectName = "";
 
+    
+    /**
+     * json text zu jsonArray  umwandelen .
+     * @param jsonText
+     * @throws ParseException
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws SQLException
+     * @throws Exception 
+     */
     void parserJSON(String jsonText) throws ParseException, FileNotFoundException, IOException, SQLException, Exception {
         try {
             GisConn gisconn = new GisConn();
@@ -55,10 +67,10 @@ public class JSONController {
                 osm_feature_value = properties.get("osm_feature_value").toString();
                 if (lastGeoobjectID != -2 && name.equals(lastGeoobjectName)) {
                     lastGeoobjectName = name;
-                    lastGeoobjectID = gisconn.add(lastGeoobjectID, name, type, jsonToWKT(type, coordinates), valid_since, valid_until, userId, osm_feature_name, osm_feature_value);
+                    lastGeoobjectID = gisconn.add(lastGeoobjectID, name, type, toWKBFinal(type, coordinates), valid_since, valid_until, userId, osm_feature_name, osm_feature_value);
                 } else {
                     lastGeoobjectName = name;
-                    lastGeoobjectID = gisconn.add(geom_id, name, type, jsonToWKT(type, coordinates), valid_since, valid_until, userId, osm_feature_name, osm_feature_value);
+                    lastGeoobjectID = gisconn.add(geom_id, name, type, toWKBFinal(type, coordinates), valid_since, valid_until, userId, osm_feature_name, osm_feature_value);
                 }
             }
 
@@ -67,6 +79,12 @@ public class JSONController {
         }
     }
 
+    /**
+     *  koordinaten zu Well-known text umwandelen .
+     * @param type
+     * @param json
+     * @return Well-known text
+     */
     public static String jsonToWKT(String type, String json) {
         //str = str.replaceAll("[\\[\\]]", "");
         String[] jsonParts = json.split("\\]\\,\\[");
@@ -75,14 +93,29 @@ public class JSONController {
             jsonParts[i] = jsonParts[i].replaceAll("\\]", "");
             jsonParts[i] = jsonParts[i].replaceAll(",", " ");
         }
+        
         String jsonJoined = String.join(",", jsonParts);
         String result = "";
-        if (type.equalsIgnoreCase("Polygon")) {
-            result = "GeomFromEWKT('" + type + "((" + jsonJoined + "))')";
+    if (type.equalsIgnoreCase("Polygon")) {
+            result =  type + "((" + jsonJoined + "))";
         } else {
-            result = "GeomFromEWKT('" + type + "(" + jsonJoined + ")')";
+            result =  type + "(" + jsonJoined + ")";
         }
         return result;
+    }
+    
+    public static String toWKBFinal(String type , String coordinates) throws com.vividsolutions.jts.io.ParseException {
+        JTS jts = new JTS();
+        
+           byte [] poi= jts.GeomFromText(jsonToWKT(type, coordinates), 0);    
+
+                StringBuilder sb = new StringBuilder();
+                sb.append("'");
+                sb.append(jts.bytesToHex(poi));
+                sb.append("'");
+                        
+                return sb.toString();
+                
     }
 
 }

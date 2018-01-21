@@ -1,12 +1,18 @@
-
-import java.sql.*;
+    
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  *
- * @author Smady91
+ * @author Nabeel smadi
+ * @author Khaled Halabieh
  */
 public class GisConn {
 
@@ -25,6 +31,12 @@ public class GisConn {
         GisConn gisConn = new GisConn();
         gisConn.setConn();
     }
+    
+    /**
+     * Verbindung mit Datenbank erstellen
+     * @throws SQLException 
+     * 
+     */
 
     public void setConn() throws SQLException {
         String url = "jdbc:postgresql://ohm.f4.htw-berlin.de/ohdm_integration";
@@ -36,6 +48,13 @@ public class GisConn {
         conn = DriverManager.getConnection(url, props);
         System.out.println("Connection Success");
     }
+    /**
+     * Id von Berlin.classification abholen,
+     * @param name
+     * @param value
+     * @return ID des classification, oder -1 falls es nicht gefunden wurde.
+     * @throws SQLException 
+     */
 
     public int getClassificationID(String name, String value) throws SQLException {
         Statement stat = conn.createStatement();
@@ -48,6 +67,23 @@ public class GisConn {
             }
         }
     }
+    
+    /**
+     * geoobject  erstellen , 
+     * 
+     * @param geoobjectID
+     * @param geoobjectName
+     * @param type
+     * @param coordinates
+     * @param valid_since
+     * @param valid_until
+     * @param userID
+     * @param osm_feature_name
+     * @param osm_feature_value
+     * @return Id des neuen geoobjects
+     * @throws SQLException
+     * @throws Exception 
+     */
 
     public int add(int geoobjectID, String geoobjectName, String type, String coordinates, String valid_since, String valid_until, String userID, String osm_feature_name, String osm_feature_value) throws SQLException, Exception {
         try {
@@ -102,6 +138,14 @@ public class GisConn {
 
     }
 
+    /**
+     * neues GeoObject in der Tabelle Berlin.geoobject erstellen 
+     * 
+     * @param name
+     * @param userID
+     * @return die neue ID
+     * @throws SQLException 
+     */
     public int addGeoObject(String name, String userID) throws SQLException {
         if (showSQL) {
             System.out.println("INSERT INTO " + schema + ".geoobject(name, source_user_id) VALUES ('" + name + "',' " + userID + "');");
@@ -125,6 +169,15 @@ public class GisConn {
         }
 
     }
+
+/**
+ * neue punkt erstellen 
+ * 
+ * @param point
+ * @param userID
+ * @return ID des neuen Punkts
+ * @throws SQLException falls ein fehler beim erstellen ginbt
+ */    
 
     public int addPoint(String point, String userID) throws SQLException {
         String sqlStatement = "INSERT INTO " + schema + ".points(point, source_user_id) VALUES (" + point + ", '" + userID + "');";
@@ -152,6 +205,13 @@ public class GisConn {
         }
     }
 
+    /**
+     * neue Line erstellen
+     * @param line
+     * @param userID
+     * @return Id der linie
+     * @throws SQLException 
+     */
     public int addLine(String line, String userID) throws SQLException {
         String sqlStatement = "INSERT INTO " + schema + ".lines(line, source_user_id) VALUES (" + line + ",' " + userID + "');";
         try (PreparedStatement statement = conn.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);) {
@@ -174,6 +234,14 @@ public class GisConn {
             }
         }
     }
+    
+    /**
+     * Neue Poligon erstellen
+     * @param polygon
+     * @param userID
+     * @return Id des Polygons
+     * @throws SQLException 
+     */
 
     public int addPolygon(String polygon, String userID) throws SQLException {
         String sqlStatement = "INSERT INTO " + schema + ".polygons(polygon, source_user_id) VALUES (" + polygon + ", '" + userID + "');";
