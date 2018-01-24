@@ -11,7 +11,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
+/**
+ * 
+ * @author Khaled Halabieh
+ * @author Nabeel Smadi
+ */
 
 
 public class JSONController {
@@ -86,7 +90,6 @@ public class JSONController {
      * @return Well-known text
      */
     public static String jsonToWKT(String type, String json) {
-        //str = str.replaceAll("[\\[\\]]", "");
         String[] jsonParts = json.split("\\]\\,\\[");
         for (int i = 0; i < jsonParts.length; i++) {
             jsonParts[i] = jsonParts[i].replaceAll("\\[", "");
@@ -103,7 +106,14 @@ public class JSONController {
         }
         return result;
     }
-    
+    /**
+     * WKB Richtig formatieren 
+     * 
+     * @param type
+     * @param coordinates
+     * @return 
+     * @throws com.vividsolutions.jts.io.ParseException 
+     */
     public static String toWKBFinal(String type , String coordinates) throws com.vividsolutions.jts.io.ParseException {
         JTS jts = new JTS();
         

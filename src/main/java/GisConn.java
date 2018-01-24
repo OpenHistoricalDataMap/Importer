@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- *
+ * 
  * @author Nabeel smadi
  * @author Khaled Halabieh
  */
@@ -23,7 +23,6 @@ public class GisConn {
     static String pass = "ohdm4ever!";
 
     public static Connection conn = null;
-    //public static org.postgresql.PGConnection conn = null;
 
     public static boolean showSQL = true;
 
@@ -50,6 +49,7 @@ public class GisConn {
     }
     /**
      * Id von Berlin.classification abholen,
+     *
      * @param name
      * @param value
      * @return ID des classification, oder -1 falls es nicht gefunden wurde.
@@ -268,6 +268,18 @@ public class GisConn {
             }
         }
     }
+    /**
+     * 
+     * @param targetID
+     * @param targetTypeID
+     * @param geoobjectID
+     * @param classificationID
+     * @param valid_since
+     * @param valid_until
+     * @param userID
+     * @throws SQLException
+     * @throws ParseException 
+     */
 
     public void addGeoobject_Geometry(int targetID, int targetTypeID, int geoobjectID, int classificationID, String valid_since, String valid_until, String userID) throws SQLException, ParseException {
         String sqlStatement = "INSERT INTO " + schema + ".geoobject_geometry(id_target, type_target, id_geoobject_source, classification_id, valid_since, valid_until, source_user_id) VALUES (" + targetID + ", " + targetTypeID + ", " + geoobjectID + ", " + classificationID + ", '"+valid_since+"', '"+valid_until+"', " + userID + ");";

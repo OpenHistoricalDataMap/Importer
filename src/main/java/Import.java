@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
+ * Webschnittstelle
  * @author Nabeel smadi
  * @author Khaled Halabieh
  * 
@@ -19,19 +20,20 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Import")
 public class Import extends HttpServlet {
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
         String JSON = request.getParameter("JSON");
-        
-         t();
-     
- 
-        
-        
+    
         JSONController jSONController = new JSONController();
         try {
             jSONController.parserJSON(JSON);
@@ -46,12 +48,7 @@ public class Import extends HttpServlet {
         out.close();
 
     }
-    
-    public static void t(){
-        System.out.println("tttttttttttttteeeeeeeeeeeeeeesssssssssssssttttttttttt");
-           test t1= new test();
-       t1.start();
-    }
+   
 
     
 }

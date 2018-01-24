@@ -5,7 +5,6 @@ import com.vividsolutions.jts.io.WKBWriter;
 import com.vividsolutions.jts.io.WKTReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,11 +14,17 @@ import java.sql.SQLException;
 
 /**
  *
- * @author kal
+ * @author khaled Halabieh
  */
 public class JTS {
     
-        
+    /**
+     *  Well-known text  zu geom umwandeln
+     * @param wkt
+     * @param srid
+     * @return geom als byte array
+     * @throws com.vividsolutions.jts.io.ParseException 
+     */    
     public static byte[] GeomFromText(String wkt, int srid) throws com.vividsolutions.jts.io.ParseException {
     if ( wkt == null ) {
         return null;
@@ -53,9 +58,18 @@ public class JTS {
         } 
     } 
        
-         private final  char[] hexArray = "0123456789ABCDEF".toCharArray();
 
-    public  String bytesToHex(byte[] bytes) {
+         
+    
+             private final  char[] hexArray = "0123456789ABCDEF".toCharArray();
+     
+         /**
+          * byte array zu string in hex format umwandeln
+          * @param bytes
+          * @return hexChars
+          */
+       
+    public String bytesToHex(byte[] bytes) {
     char[] hexChars = new char[bytes.length * 2];
     for ( int j = 0; j < bytes.length; j++ ) {
         int v = bytes[j] & 0xFF;
