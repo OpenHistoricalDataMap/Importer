@@ -17,8 +17,8 @@ import java.util.*;
 public class GisConn {
 
     static String host = "ohm.f4.htw-berlin.de";
-    static String db = "ohdm_integration";
-    static String schema = "Berlin";
+    static String db = "ohdm_test";
+    static String schema = "sose18";
     static String user = "geoserver";
     static String pass = "ohdm4ever!";
 
@@ -29,6 +29,7 @@ public class GisConn {
     public static void main(String[] args) throws SQLException {
         GisConn gisConn = new GisConn();
         gisConn.setConn();
+        KMLControlller.addKMLGeoObject("hallo", conn);
     }
     
     /**
@@ -38,7 +39,7 @@ public class GisConn {
      */
 
     public void setConn() throws SQLException {
-        String url = "jdbc:postgresql://ohm.f4.htw-berlin.de/ohdm_integration";
+        String url = "jdbc:postgresql://ohm.f4.htw-berlin.de/ohdm_test"; //todo zurückändern
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", pass);
@@ -130,7 +131,7 @@ public class GisConn {
             try {
                 conn.rollback();
             } catch (Exception ee) {
-                errorMessage += " A futher exception occoured when trying to rollback the transaction";
+                errorMessage += " A further exception occoured when trying to rollback the transaction";
             }
             System.out.println("errorMessage: " + e);
             throw new Exception(errorMessage, e);
@@ -171,7 +172,7 @@ public class GisConn {
     }
 
 /**
- * neue punkt erstellen 
+ * neuen punkt erstellen
  * 
  * @param point
  * @param userID

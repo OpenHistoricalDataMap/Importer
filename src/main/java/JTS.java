@@ -35,11 +35,11 @@ public class JTS {
     return toWKB( g );
 }
     
-    
+
        private static byte[] toWKB( Geometry g ) { 
         try { 
-            WKBWriter w = new WKBWriter(); 
-             
+            WKBWriter w = new WKBWriter();
+
             //write the geometry 
             ByteArrayOutputStream bytes = new ByteArrayOutputStream(); 
             w.write( g , new OutputStreamOutStream( bytes ) ); 
