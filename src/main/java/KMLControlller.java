@@ -21,10 +21,7 @@ public class KMLControlller {
         System.out.println("INSERT INTO "+schema+".\"s0559289_GO\" (name, geom)\n"
                 + "VALUES ('" + "test1" + "'," + " ST_GeomFromKML('"+geometray+"'));");
         try (PreparedStatement statement = conn.prepareStatement("INSERT INTO "+schema+".\"s0559289_GO\" (name, geom)\n"
-                + "VALUES ('" + "test1" + "'," + " ST_GeomFromKML('<LineString>\n" +
-                "<coordinates>-23.02,32.43\n" +
-                "-71.16,42.23</coordinates>\n" +
-                "</LineString>'));", Statement.RETURN_GENERATED_KEYS);) {
+                + "VALUES ('" + "test1" + "'," + " ST_GeomFromKML('" + geometray + "'));", Statement.RETURN_GENERATED_KEYS);) {
 
             int affectedRows = statement.executeUpdate();
 
