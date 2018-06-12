@@ -31,7 +31,7 @@ public class KMLController {
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    return generatedKeys.getInt("id");
+                    //return generatedKeys.getInt("id");
                 } else {
                     throw new SQLException("Creating failed, no ID obtained.");
                 }
