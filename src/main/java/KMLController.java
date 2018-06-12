@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class KMLControlller {
+public class KMLController {
 
     static String host = "ohm.f4.htw-berlin.de";
     static String db = "ohdm_test";
