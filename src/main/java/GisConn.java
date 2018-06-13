@@ -16,10 +16,15 @@ import java.util.*;
 public class GisConn {
 
     static String host = "ohm.f4.htw-berlin.de";
+    //static String host = "ohm.f4.htw-berlin.de";
     static String db = "ohdm_test";
+    //static String db = "ohdm_test";
     static String schema = "sose18";
+    //static String schema = "sose18";
     static String user = "geoserver";
+    //static String user = "geoserver";
     static String pass = "ohdm4ever!";
+    //static String pass = "ohdm4ever!";
 
     public static Connection conn = null;
 
@@ -28,7 +33,7 @@ public class GisConn {
     public static void main(String[] args) throws SQLException {
         GisConn gisConn = new GisConn();
         gisConn.setConn();
-        KMLControlller.addKMLGeoObject("hallo", conn);
+        KMLController.addKMLGeoObject("hallo", conn);
     }
     
     /**

@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class KMLControlller {
+public class KMLController {
 
     static String host = "ohm.f4.htw-berlin.de";
     static String db = "ohdm_test";
@@ -31,7 +31,7 @@ public class KMLControlller {
 
             /*try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    return generatedKeys.getInt("id");
+                    //return generatedKeys.getInt("id");
                 } else {
                     throw new SQLException("Creating failed, no ID obtained.");
                 }
