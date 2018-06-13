@@ -29,13 +29,13 @@ public class KMLControlller {
                 throw new SQLException("Creating failed, no rows affected.");
             }
 
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+            /*try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getInt("id");
                 } else {
                     throw new SQLException("Creating failed, no ID obtained.");
                 }
-            }
+            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }

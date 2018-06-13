@@ -9,33 +9,32 @@
 	<br />
 	<hr />
 	<form action="/action_page.php">
-		Format: <select size="1" id="slt_format" name="formats">
+		<select size="1" id="slt_format" name="formats">
 			<option value="blank" selected></option>
 			<option value="json">JSON</option>
 			<option value="kml">KML</option>
 			<option value="gml">GML</option>
 			<option value="shapefile">Shapefile</option>
-		</select> <br> <input type="button" onclick="inputFunction()" value="-->">
-		<input type="text" id="result" size="20">
-		<br>
+		</select>
+		<!-- <p id="form"></p> -->
 	</form>
-	<form method="Post" name="Import" action="Imports/Import">
-		<textarea class="input" name="JSON" rows="15" cols="50"></textarea>
-		<br /> <input type="submit" value="submit" /> <input type="reset"
-			value="reset" />
+	<form method="Post" name="Import" action="Import">
+		<textarea id="geom" class="input" name="GEO" rows="15" cols="50"></textarea>
+		<br/>
+		<input type="submit" name="submit" class="submitButton" value="submit" onclick="geometryInputFunction"/>
+		<input type="reset" value="reset"/>
 	</form>
+	<button type="button" onclick="geometryInputFunction()">.</button>
+	<p id="geo"></p>
 	<script>
-		function inputFunction() {
-			var selected_index = oForm.elements["formats"].selectedIndex;
-			
-			if(selected_index > 0)	{
-				var selected_option_value = oForm.elements["formats"].options[selected_index].value;
-				var selected_option_text = oForm.elements["formats"].options[selected_index].text;
-			}
-			else
-			{
-				alert('Please select a country from the drop down list');
-			}
+		function formatInputFunction() {
+			var format = document.getElementById("slt_format").value;
+			document.getElementById("form").innerHTML = format;
+		}
+	</script>
+	<script>
+		function geometryInputFunction(){
+			var geo = document.querySelector("#geom").value;
 		}
 	</script>
 </body>
