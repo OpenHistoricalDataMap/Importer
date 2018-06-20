@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Importer</title>
+</head>
+<body>
+	<hr>
+	Zum Import bitte Info eingeben:
+	<br />
+	<hr />
+	<form action="/action_page.php">
+		<select size="1" id="slt_format" name="formats">
+			<option value="blank" selected></option>
+			<option value="json">JSON</option>
+			<option value="kml">KML</option>
+			<option value="gml">GML</option>
+			<option value="shapefile">Shapefile</option>
+		</select>
+		<!-- <p id="form"></p> -->
+	</form>
+	<form method="Post" name="Import" action="Import">
+		<textarea id="geom" class="input" name="GEO" rows="15" cols="50"></textarea>
+		<br/>
+		<input type="submit" name="submit" class="submitButton" value="submit" onclick="geometryInputFunction"/>
+		<input type="reset" value="reset"/>
+	</form>
+	<button type="button" onclick="geometryInputFunction()">.</button>
+	<p id="geo"></p>
+	<script>
+		function formatInputFunction() {
+			var format = document.getElementById("slt_format").value;
+			document.getElementById("form").innerHTML = format;
+		}
+	</script>
+	<script>
+		function geometryInputFunction(){
+			var geo = document.querySelector("#geom").value;
+		}
+	</script>
+</body>
+</html>
+
+
