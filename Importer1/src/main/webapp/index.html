@@ -8,19 +8,21 @@
 	Zum Import bitte Info eingeben:
 	<br />
 	<hr />
-	<form action="/ImportServlet">
-		Format: <select size="1" id="slt_format" name="formats">
+	<form method="Post" name="Import" action="ImportServlet">
+		Format:<select size="1" id="slt_format" name="formats">
 			<option value="blank" selected></option>
 			<option value="json">JSON</option>
 			<option value="kml">KML</option>
 			<option value="gml">GML</option>
 			<option value="shapefile">Shapefile</option>
 		</select>
+                <br>
+		Name:<textarea class="input" name="name" rows="1" cols="25"></textarea>
+		<br/>
 		<br>
-	</form>
-	<form method="Post" name="Import" action="ImportServlet">
-		<textarea class="input" name="JSON" rows="15" cols="50"></textarea>
-		<br /> <input type="submit" value="submit" /> <input type="reset"
+		Geometrie: <textarea class="input" name="geom" rows="15" cols="50"></textarea>
+		<br/> 
+                <input type="submit" value="submit" /> <input type="reset"
 			value="reset" />
 	</form>
 	<script>
