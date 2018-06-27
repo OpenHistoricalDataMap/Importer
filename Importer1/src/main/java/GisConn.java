@@ -1,4 +1,4 @@
-    
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -54,14 +54,19 @@ public class GisConn {
 
     public static void setConn() throws SQLException{
         
-        String url = "jdbc:postgresql://ohm.f4.htw-berlin.de/ohdm_test"; //todo zurückändern
-        Properties props = new Properties();
-        props.setProperty("user", user);
-        props.setProperty("password", pass);
-        props.setProperty("currentSchema", schema);
-        //   props.setProperty("ssl", "true");
-        conn = DriverManager.getConnection(url, props);
-        System.out.println("Connection Success");
+        try {
+            Class.forName("org.postgresql.Driver");
+            String url = "jdbc:postgresql://ohm.f4.htw-berlin.de/ohdm_test"; //todo zurückändern
+            Properties props = new Properties();
+            props.setProperty("user", user);
+            props.setProperty("password", pass);
+            props.setProperty("currentSchema", schema);
+            //   props.setProperty("ssl", "true");
+            conn = DriverManager.getConnection(url, props);
+            System.out.println("Connection Success");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GisConn.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     /**
      * Id von Berlin.classification abholen,

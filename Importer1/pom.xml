@@ -20,28 +20,11 @@
 
 	<dependencies>
 
-		<dependency>
-			<groupId>net.postgis</groupId>
-			<artifactId>postgis-jdbc</artifactId>
-			<version>2.2.0</version>
-			<exclusions>
-				<exclusion>
-					<!-- NOTE: Version 4.2 has bundled slf4j -->
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<!-- NOTE: Version 4.2 has bundled slf4j -->
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-classic</artifactId>
-				</exclusion>
-				<exclusion>
-					<!-- NOTE: Version 4.2 has bundled slf4j -->
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<dependency>
+    <groupId>net.postgis</groupId>
+    <artifactId>postgis-jdbc</artifactId>
+    <version>2.1.7.2</version>
+</dependency>
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
