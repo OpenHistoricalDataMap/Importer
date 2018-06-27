@@ -36,7 +36,7 @@ public class GisConn {
     {
         try {
             setConn();
-            KMLController.addKMLGeoObject("tsetst", "<LineString>\n" +
+            KMLController.addKMLGeoObject("testsoda", "<LineString>\n" +
                     "			<coordinates>-71.1663,42.2614 \n" +
                     "				-71.1667,42.2616</coordinates>\n" +
                     "		</LineString>");

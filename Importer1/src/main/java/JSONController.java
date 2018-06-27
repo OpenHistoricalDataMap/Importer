@@ -71,10 +71,10 @@ public class JSONController {
                 osm_feature_value = properties.get("osm_feature_value").toString();
                 if (lastGeoobjectID != -2 && name.equals(lastGeoobjectName)) {
                     lastGeoobjectName = name;
-                    lastGeoobjectID = gisconn.add(lastGeoobjectID, name, type, toWKBFinal(type, coordinates), valid_since, valid_until, userId, osm_feature_name, osm_feature_value);
+                    //lastGeoobjectID = gisconn.add(lastGeoobjectID, name, type, toWKBFinal(type, coordinates), valid_since, valid_until, userId, osm_feature_name, osm_feature_value);
                 } else {
                     lastGeoobjectName = name;
-                    lastGeoobjectID = gisconn.add(geom_id, name, type, toWKBFinal(type, coordinates), valid_since, valid_until, userId, osm_feature_name, osm_feature_value);
+                    //lastGeoobjectID = gisconn.add(geom_id, name, type, toWKBFinal(type, coordinates), valid_since, valid_until, userId, osm_feature_name, osm_feature_value);
                 }
             }
 
