@@ -43,7 +43,9 @@ public class ImportServlet extends HttpServlet {
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Logger.getLogger(ImportServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } catch(Exception e){
+                    e.printStackTrace();
+                    }
             
             
             switch (format) {
@@ -52,9 +54,10 @@ public class ImportServlet extends HttpServlet {
                                 out.println("test");
 
                     break;
-            }
+            } 
             //response.sendRedirect("index.html");
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
