@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Importer</title>
+</head>
+<body>
+	<hr>
+	Zum Import bitte Info eingeben:
+	<br />
+	<hr />
+	<form action="/ImportServlet">
+		Format: <select size="1" id="slt_format" name="formats">
+			<option value="blank" selected></option>
+			<option value="json">JSON</option>
+			<option value="kml">KML</option>
+			<option value="gml">GML</option>
+			<option value="shapefile">Shapefile</option>
+		</select>
+		<br>
+	</form>
+	<form method="Post" name="Import" action="ImportServlet">
+		<textarea class="input" name="JSON" rows="15" cols="50"></textarea>
+		<br /> <input type="submit" value="submit" /> <input type="reset"
+			value="reset" />
+	</form>
+	<script>
+		function inputFunction() {
+			var selected_index = oForm.elements["formats"].selectedIndex;
+			
+			if(selected_index > 0)	{
+				var selected_option_value = oForm.elements["formats"].options[selected_index].value;
+				var selected_option_text = oForm.elements["formats"].options[selected_index].text;
+			}
+			else
+			{
+				alert('Please select a country from the drop down list');
+			}
+		}
+	</script>
+</body>
+</html>

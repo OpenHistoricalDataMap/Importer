@@ -41,6 +41,7 @@ public class ImportServlet extends HttpServlet {
             try {
                 GisConn.setConn();
             } catch (SQLException ex) {
+                ex.printStackTrace();
                 Logger.getLogger(ImportServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             
@@ -48,6 +49,8 @@ public class ImportServlet extends HttpServlet {
             switch (format) {
                 case "kml":
                     KMLController.addKMLGeoObject(name, geom);
+                                out.println("test");
+
                     break;
             }
             //response.sendRedirect("index.html");
