@@ -1,23 +1,45 @@
-import java.io.PrintWriter;
 import java.sql.*;
 
 public class KMLController {
 
-    static String schema = "sose2018";
+    static String host = "ohm.f4.htw-berlin.de";
+    static String db = "ohdm_test";
+    static String schema = "sose18";
+    static String user = "geoserver";
+    static String pass = "ohdm4ever!";
 
-    public static void addKMLGeoObject(String name, String geom)
+    static String geometrey = "<LineString>\n<coordinates>-23.02,32.43\n-71.16,42.23</coordinates>\n</LineString>";
+
+    boolean showSQL=true;
+
+    public static int addKMLGeoObject(String name, Connection conn)
     {
-        System.out.println("INSERT INTO "+GisConn.schema+".\"importtest\" (name, geom)\n"
-                + "VALUES ('" + name + "'," + " ST_GeomFromKML('"+geom+"'));");
-        try (PreparedStatement statement = GisConn.conn.prepareStatement("INSERT INTO "+schema+".\"importtest\" (name, geom)\n"
-                + "VALUES ('" + name+ "'," + " ST_GeomFromKML('" + geom + "'));", Statement.RETURN_GENERATED_KEYS);) {
+        if (true) {
+            //System.out.println("INSERT INTO " + schema + ".s0559289_GO(name, source_user_id) VALUES ('" + name + "',' " + userID + "');");
+        //DECLARE geometrie geometry;\nBEGIN geometrie := ST_GeomFromKML("+geometray+")\n
+        }
+        System.out.println("INSERT INTO "+schema+".\"s0559289_GO\" (name, geom)\n"
+                + "VALUES ('" + "test1" + "'," + " ST_GeomFromKML('"+geometrey+"'));");
+        try (PreparedStatement statement = conn.prepareStatement("INSERT INTO "+schema+".\"s0559289_GO\" (name, geom)\n"
+                + "VALUES ('" + "test1" + "'," + " ST_GeomFromKML('" + geometrey + "'));", Statement.RETURN_GENERATED_KEYS);) {
+
             int affectedRows = statement.executeUpdate();
+
             if (affectedRows == 0) {
                 throw new SQLException("Creating failed, no rows affected.");
             }
 
+            /*try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    //return generatedKeys.getInt("id");
+                } else {
+                    throw new SQLException("Creating failed, no ID obtained.");
+                }
+            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return 0;
     }
 }
