@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Importer</title>
+    <title>Importer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 	<hr>
@@ -19,10 +20,13 @@
                 <br>
 		Name:<textarea class="input" name="name" rows="1" cols="25"></textarea>
 		<br/>
+                <br>
+                Datum: gültig von <input type="date" name="begindate"> bis <input type="date" name="enddate">
+                <br/>
 		<br>
 		Geometrie: <textarea class="input" name="geom" rows="15" cols="50"></textarea>
 		<br/> 
-                <input type="submit" value="submit" /> <input type="reset"
+                <input id="sub" type="submit" value="submit" /> <input id="res" type="reset"
 			value="reset" />
 	</form>
 	<script>
