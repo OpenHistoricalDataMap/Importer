@@ -51,10 +51,23 @@ public class ImportServlet extends HttpServlet {
             switch (format) {
                 case "kml":
                     KMLController.addKMLGeoObject(name, geom);
+<<<<<<< HEAD
+                    break;
+                case "gml":
+                    GMLController.addGMLGeoObject(name, geom);
+                    break;
+                case "json":
+                    GeoJSONController.addGeoJSONGeoObject(name, geom);
+                    break;
+            } 
+            
+            GisConn.closeConn();
+=======
                                 out.println("test");
 
                     break;
             } 
+>>>>>>> 287cc27df40a95035ff01874612c14064165caf8
             //response.sendRedirect("index.html");
         }
         

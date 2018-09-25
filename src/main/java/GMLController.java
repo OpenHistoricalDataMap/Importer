@@ -4,7 +4,11 @@ public class GMLController {
 
     static String host = "ohm.f4.htw-berlin.de";
     static String db = "ohdm_test";
+<<<<<<< HEAD
+    static String schema = "berlin";
+=======
     static String schema = "sose18";
+>>>>>>> 287cc27df40a95035ff01874612c14064165caf8
     static String user = "geoserver";
     static String pass = "ohdm4ever!";
 
@@ -34,4 +38,12 @@ public class GMLController {
 
         return 0;
     }
+<<<<<<< HEAD
+    
+    public static int addGMLPolygon()
+    {
+        
+    }
+=======
+>>>>>>> 287cc27df40a95035ff01874612c14064165caf8
 }
