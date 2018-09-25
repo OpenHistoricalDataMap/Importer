@@ -6,6 +6,9 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,16 +34,30 @@ public class ImportServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ImportServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ImportServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            String geom = request.getParameter("geom");
+            String format = request.getParameter("formats");
+            String name = request.getParameter("name");
+            
+            try {
+                GisConn.setConn();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                Logger.getLogger(ImportServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch(Exception e){
+                    e.printStackTrace();
+                    }
+            
+            
+            switch (format) {
+                case "kml":
+                    KMLController.addKMLGeoObject(name, geom);
+                                out.println("test");
+
+                    break;
+            } 
+            //response.sendRedirect("index.html");
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

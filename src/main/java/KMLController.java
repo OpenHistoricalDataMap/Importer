@@ -8,7 +8,7 @@ public class KMLController {
     static String user = "geoserver";
     static String pass = "ohdm4ever!";
 
-    static String geometray = "<LineString>\n<coordinates>-23.02,32.43\n-71.16,42.23</coordinates>\n</LineString>";
+    static String geometrey = "<LineString>\n<coordinates>-23.02,32.43\n-71.16,42.23</coordinates>\n</LineString>";
 
     boolean showSQL=true;
 
@@ -19,9 +19,9 @@ public class KMLController {
         //DECLARE geometrie geometry;\nBEGIN geometrie := ST_GeomFromKML("+geometray+")\n
         }
         System.out.println("INSERT INTO "+schema+".\"s0559289_GO\" (name, geom)\n"
-                + "VALUES ('" + "test1" + "'," + " ST_GeomFromKML('"+geometray+"'));");
+                + "VALUES ('" + "test1" + "'," + " ST_GeomFromKML('"+geometrey+"'));");
         try (PreparedStatement statement = conn.prepareStatement("INSERT INTO "+schema+".\"s0559289_GO\" (name, geom)\n"
-                + "VALUES ('" + "test1" + "'," + " ST_GeomFromKML('" + geometray + "'));", Statement.RETURN_GENERATED_KEYS);) {
+                + "VALUES ('" + "test1" + "'," + " ST_GeomFromKML('" + geometrey + "'));", Statement.RETURN_GENERATED_KEYS);) {
 
             int affectedRows = statement.executeUpdate();
 
