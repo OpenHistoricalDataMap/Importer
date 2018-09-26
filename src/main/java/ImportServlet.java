@@ -61,10 +61,10 @@ public class ImportServlet extends HttpServlet {
             }
                     break;
                 case "gml":
-                    //GMLController.addGMLGeoObject(geom);
+                    id=GMLController.addGMLGeoObject(geom);
                     break;
                 case "json":
-                    //GeoJSONController.addGeoJSONGeoObject(geom);
+                    id=GeoJSONController.addGeoJSONGeoObject(geom);
                     break;
             } 
             } catch (SQLException ex) {
@@ -72,8 +72,11 @@ public class ImportServlet extends HttpServlet {
                                 GisConn.closeConn();
 
                 }
+            finally
+            {
             GisConn.closeConn();
-            out.print(id);
+            }
+            out.println(id);
             //response.sendRedirect("index.html");
         }
         

@@ -19,11 +19,26 @@ public class KMLController {
         long id;
         
         if(geom.contains("Polygon")){
-            id=addGeometry(geom, "polygon");
+            
+            String[] geomSplitOne = geom.split("<Polygon>");
+            String[] geomSplitTwo = geomSplitOne[1].split("</Polygon>");
+            System.out.println("<Polygon>"+geomSplitTwo[0]+"</Polygon>\n"+geomSplitTwo[0]);
+            id=addGeometry("<Polygon>"+geomSplitTwo[0]+"</Polygon>", "polygon");
+
         }else if(geom.contains("LineString")){
-            id=addGeometry(geom, "line");
+            
+            String[] geomSplitOne = geom.split("<LineString>");
+            String[] geomSplitTwo = geomSplitOne[1].split("</LineString>");
+            System.out.println("<LineString>"+geomSplitTwo[0]+"</LineString>\n"+geomSplitTwo[0]);
+            id=addGeometry("<LineString>"+geomSplitTwo[0]+"</LineString>", "line");
+            
         }else if(geom.contains("Point")){
-            id=addGeometry(geom, "point");
+            
+            String[] geomSplitOne = geom.split("<Point>");
+            String[] geomSplitTwo = geomSplitOne[1].split("</Point>");
+            System.out.println("<Point>"+geomSplitTwo[0]+"</Point>\n"+geomSplitTwo[0]);
+            id=addGeometry("<Point>"+geomSplitTwo[0]+"</Point>", "point");
+            
         }else{
             throw new IllegalArgumentException();
         }
