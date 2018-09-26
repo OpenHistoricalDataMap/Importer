@@ -14,11 +14,7 @@ public class GeoJSONController {
 
     public static int addGeoJSONGeoObject(String name, Connection conn)
     {
-<<<<<<< HEAD:src/main/java/GeoJSONController.java
         System.out.println("INSERT INTO "+GisConn.schema+".\"s0559289_GO\" (name, geom)\n"
-=======
-        System.out.println("INSERT INTO "+schema+".\"s0559289_GO\" (name, geom)\n"
->>>>>>> 287cc27df40a95035ff01874612c14064165caf8:src/main/java/GeoJSONController.java
                 + "VALUES ('" + "test1" + "'," + " ST_GeomFromGeoJSON('"+geometrey+"'));");
         try (PreparedStatement statement = conn.prepareStatement("INSERT INTO "+schema+".\"s0559289_GO\" (name, geom)\n"
                 + "VALUES ('" + "test1" + "'," + " ST_GeomFromGeoJSON('" + geometrey + "'));", Statement.RETURN_GENERATED_KEYS);) {

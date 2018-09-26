@@ -37,6 +37,8 @@ public class ImportServlet extends HttpServlet {
             String geom = request.getParameter("geom");
             String format = request.getParameter("formats");
             String name = request.getParameter("name");
+            String validSince = request.getParameter("begindate");
+            String validUntil = request.getParameter("enddate");
             
             try {
                 GisConn.setConn();
@@ -47,27 +49,31 @@ public class ImportServlet extends HttpServlet {
                     e.printStackTrace();
                     }
             
+            long id=-1;
             
+            try {
             switch (format) {
                 case "kml":
-                    KMLController.addKMLGeoObject(name, geom);
-<<<<<<< HEAD
+            {
+                
+                    id=KMLController.addKMLGeoObject(geom);
+                
+            }
                     break;
                 case "gml":
-                    GMLController.addGMLGeoObject(name, geom);
+                    //GMLController.addGMLGeoObject(geom);
                     break;
                 case "json":
-                    GeoJSONController.addGeoJSONGeoObject(name, geom);
+                    //GeoJSONController.addGeoJSONGeoObject(geom);
                     break;
             } 
-            
-            GisConn.closeConn();
-=======
-                                out.println("test");
+            } catch (SQLException ex) {
+                    Logger.getLogger(ImportServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                GisConn.closeConn();
 
-                    break;
-            } 
->>>>>>> 287cc27df40a95035ff01874612c14064165caf8
+                }
+            GisConn.closeConn();
+            out.print(id);
             //response.sendRedirect("index.html");
         }
         

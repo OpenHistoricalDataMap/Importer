@@ -21,7 +21,7 @@ public class GisConn {
     //static String host = "ohm.f4.htw-berlin.de";
     static String db = "ohdm_public";
     //static String db = "ohdm_test";
-    static String schema = "sose2018";
+    static String schema = "berlin";
     //static String schema = "sose18";
     static String user = "geoserver";
     //static String user = "geoserver";
@@ -31,26 +31,6 @@ public class GisConn {
     public static Connection conn = null;
 
     public static boolean showSQL = true;
-
-    public static void main(String[] args)
-    {
-        try {
-            setConn();
-<<<<<<< HEAD
-            KMLController.addKMLGeoObject("testsoda", "<coordinates>-71.1663,42.2614 \n" +
-                    "<LineString>\n" +
-                    "-71.1667,42.2616</coordinates>\n" +
-                    "</LineString>");
-=======
-            KMLController.addKMLGeoObject("testsoda", "<LineString>\n" +
-                    "			<coordinates>-71.1663,42.2614 \n" +
-                    "				-71.1667,42.2616</coordinates>\n" +
-                    "		</LineString>");
->>>>>>> 287cc27df40a95035ff01874612c14064165caf8
-        } catch (SQLException ex) {
-            Logger.getLogger(GisConn.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     
     /**
@@ -63,7 +43,7 @@ public class GisConn {
         
         try {
             Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://ohm.f4.htw-berlin.de/ohdm_test"; //todo zurückändern
+            String url = "jdbc:postgresql://ohm.f4.htw-berlin.de/"+db; //todo zurückändern
             Properties props = new Properties();
             props.setProperty("user", user);
             props.setProperty("password", pass);
@@ -76,8 +56,12 @@ public class GisConn {
         }
     }
     
-    public static void closeConn() throws SQLException{
-        conn.close();
+    public static void closeConn(){
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(GisConn.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**

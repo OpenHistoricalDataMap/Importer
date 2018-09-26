@@ -4,11 +4,7 @@ public class GMLController {
 
     static String host = "ohm.f4.htw-berlin.de";
     static String db = "ohdm_test";
-<<<<<<< HEAD
     static String schema = "berlin";
-=======
-    static String schema = "sose18";
->>>>>>> 287cc27df40a95035ff01874612c14064165caf8
     static String user = "geoserver";
     static String pass = "ohdm4ever!";
 
@@ -22,6 +18,9 @@ public class GMLController {
 
     public static int addGMLGeoObject(String name, Connection conn)
     {
+        
+        
+        
         System.out.println("INSERT INTO "+schema+".\"s0559289_GO\" (name, geom)\n"
                 + "VALUES ('" + "test1" + "'," + " ST_GeomFromGML('"+geometrey+"'));");
         try (PreparedStatement statement = conn.prepareStatement("INSERT INTO "+schema+".\"s0559289_GO\" (name, geom)\n"
@@ -38,12 +37,8 @@ public class GMLController {
 
         return 0;
     }
-<<<<<<< HEAD
-    
     public static int addGMLPolygon()
     {
-        
+        return 0;
     }
-=======
->>>>>>> 287cc27df40a95035ff01874612c14064165caf8
 }
