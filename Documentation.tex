@@ -19,21 +19,29 @@
 
 
 
+
+
+
+
+
 \end{verbatim}
 \begin{tabular}{llll}
 \textbf{Thema: } & & Importer von GeoJSON-, GML- \\
-&& und KML-Formaten& \\
-\textbf{Autor:} & & David Linke, Sophie Schauer & \\
+&& und KML-Formaten \\
+&& &\\
+\textbf{Autor:} & & David Linke, Sophie Schauer \\
+&& &\\
 \textbf{Betreuer:} & & Prof. Dr. Thomas Schwotzer &\\
 \end{tabular}
 \end{center}
 \pagebreak
-
 \section{Aufgabe der Komponenten}
-In der Open Historical Data Map werden Karten, anders als bei OpenStreetMap oder GoogleMaps, aus verschiedenen Zeiträumen zur Verfügung gestellt. Um die Datenbank mit einer Vielzahl von historischen Karten füllen zu können, und dies auch für Außenstehende möglich zu machen, ist eine Schnittstelle zum schnellen und einfachen Importieren notwendig. In dieser sollen Kartendaten in den gängigen Formaten, wie GeoJSON, KML, GML, eingefügt, benannt und zeitlich eingeordnet werden können. Die Daten sollen dann direkt in die Datenbank gespeichert werden und so zur Bearbeitung nutzbar sein.
+In der Open Historical Data Map werden Karten, anders als bei OpenStreetMap oder GoogleMaps, aus verschiedenen Zeiträumen zur Verfügung gestellt. Um die Datenbank mit einer Vielzahl von historischen Karten füllen zu können, und dies auch für Außenstehende möglich zu machen, ist eine Schnittstelle zum schnellen und einfachen Importieren notwendig. In dieser sollen Kartendaten in den gängigen Formaten, wie GeoJSON, KML, GML, eingefügt, benannt und zeitlich eingeordnet werden können. Die Daten sollen dann direkt in die Datenbank gespeichert werden und so zur Bearbeitung nutzbar sein.\\
+\\
 
-Da PostGIS Geometrie nicht in den Formaten KML, GML oder GeoJSON erfasst, müssen die Dateien zunächst umgewandelt werden. Nach Evaluierung des bestehenden Codes einer Vorgängerversion des Importers und der PostGIS-Dokumentation konnten wir feststellen, dass PostGIS über Funktionen zur einfachen Umwandlung von KML-, GML- und GeoJSON-Formaten in PostGIS-Geometrie-Objekte verfügt. Als Schnittstelle zwischen Benutzer und Datenbank wurde ein Servlet erstellt. Der Benutzer kann auf der Webseite das Format der Datei auswählen, einen Namen hinterlegen, und angeben in welchem Datumsbereich die von ihm zu importierende Datei gültig ist. In einem Textfeld können die eigentlichen Geometriedaten erfasst werden.
-
+Da PostGIS Geometrie nicht in den Formaten KML, GML oder GeoJSON erfasst, müssen die Dateien zunächst umgewandelt werden. Nach Evaluierung des bestehenden Codes einer Vorgängerversion des Importers und der PostGIS-Dokumentation konnten wir feststellen, dass PostGIS über Funktionen zur einfachen Umwandlung von KML-, GML- und GeoJSON-Formaten in PostGIS-Geometrie-Objekte verfügt. Als Schnittstelle zwischen Benutzer und Datenbank wurde ein Servlet erstellt. Der Benutzer kann auf der Webseite das Format der Datei auswählen, einen Namen hinterlegen, und angeben in welchem Datumsbereich die von ihm zu importierende Datei gültig ist. In einem Textfeld können die eigentlichen Geometriedaten erfasst werden.\\
+\\
+\\
 Um die Geometriedaten in die OHDM-Datenbank zu importieren wird eine Klasse benötigt, die eine Verbindung zur Datenbank und dem richtigen Schema erstellt. Das Servlet nimmt die eingegebenen Daten entgegen und verbindet sich mit der Datenbank. Die Geometriedaten werden, je nach ausgewählten Format, zur Umwandlung weitergeleitet. Daraufhin muss eine SQL-Query erstellt werden, um die Daten letztlich in die richtige Tabelle der Datenbank einzufügen.
 
 \section{Architektur}
@@ -51,22 +59,32 @@ Das Projekt besteht aus folgenden Klassen:
 
 \subsection{Schnittstellendefinitionen}
 \subsubsection{GisConn.java}
-Diese Klasse wird genutzt um eine Verbindung zur OHDM-Datenbank zu schaffen. Der Hostname, die Datenbank, das Schema, der User und das Passwort müssen zunächst gesetzt werden. Es gibt eine Funktion setConn() um die Verbindung zu initialisieren, und eine Funktion closeConn() um die Verbindung wieder zu schließen. In der main-Funktion wird versucht mit setConn() die Verbindung zu starten, dabei werden SQL-Exceptions abgefangen
-\subsubsection{ImportServlet.java}-Klasse
-\subsubsection{GeoJSONController.java}-Klasse mit der Funktion addGeoJSONGeoObject leitet eine SQL-Query an die Datenbank weiter. In dieser soll eine Datei im GeoJSON-Format mit Hilfe der Funktion ST\_GeomFromGeoJSON umgewandelt werden und dann in das richtige Schema der Datenbank eingebunden werden.
-\subsubsection{GMLController.java}-Klasse mit der Funktion addGMLGeoObject leitet eine SQL-Query an die Datenbank weiter. In dieser soll eine Datei im GML-Format mit Hilfe der Funktion ST\_GeomFromGML umgewandelt werden und dann in das richtige Schema der Datenbank eingebunden werden.
-\subsubsection{KMLController.java}-Klasse mit der Funktion addKMLGeoObject leitet eine SQL-Query an die Datenbank weiter. In dieser soll eine Datei im KML-Format mit Hilfe der Funktion ST\_GeomFromKML umgewandelt werden und dann in das richtige Schema der Datenbank eingebunden werden.
+Diese Klasse wird genutzt um eine Verbindung zur OHDM-Datenbank zu schaffen. Der Hostname, die Datenbank, das Schema, der User und das Passwort müssen zunächst gesetzt werden. Es gibt eine Funktion setConn() um die Verbindung zu initialisieren, und eine Funktion closeConn() um die Verbindung wieder zu schließen. In der main-Funktion wird versucht mit setConn() die Verbindung zu starten, dabei werden SQL-Exceptions abgefangen.
 
-\subsection{genutzte Komponenten}
-Zur Umwandlung der Geometriedaten aus den einzelnen Formaten wird ein PostGis-JDBC-Treiber genutzt. Ein häufig aufgetretener Fehler war eine Exception, die geworfen wurde, da die Funktionen ST\_GeomFromGeoJSON, ST\_GeomFromGML und ST\_GeomFromKML nicht existieren. Die ist auf eine fehlerhafte Version des JDBC-Treibers zurück zu führen. Bei Auftreten dieses Fehlers muss sichergestellt werden, dass die Version *** und nicht *** genutzt wird.
+\subsubsection{ImportServlet.java}
+Durch Drücken des Submit-Buttons auf der HTML-Seite werden die eingegebenen Daten an das Servlet weitergeleitet. Das Servlet zieht aus diesem Request den Namen, den Gültigkeitszeitraum, das Format und die eigentlichen Geometriedaten heraus. Anschließend wird mittels einer Switch-Case-Anweisung unterschieden welches Format ausgewählt wurde. Abhängig davon wird dann die jeweilige Format-Klasse und -Funktion aufgerufen. Wurden die Geometriedaten erfolgreich eingefügt, erhält das Servlet die ID der neu eingetragenen Geometrie.
 
-Desweiteren wird ein PostGreSQL-JDBC-Treiber genutzt. Damit zusammenhängend trat vermehrt ein NoSuchMethodError unter dem Pfad target/Imprts-1.0-SNAPSHOT/WEB-INF/lib/ auf. Dieses Problem konnte, durch Löschung der PostGreSQL-Dependency und des entsprechenden Eintrags in der pom.xml-Datei, behoben werden.
+\subsubsection{GeoJSONController.java}
+***
 
-Bei der Nutzung der Funktionen ST\_GeomFromGeoJSON, ST\_GeomFromGML und ST\_GeomFromKML werden nur eine Tags wie <Point>, <Coordinates>, andere Tags können nicht genutzt werden, da sonst eine Exception geworfen wird. Wichtig ist, dass in das Textfeld der Importer-Webseite nur korrekte Daten in den zur Verfügung stehenden Formaten eingetragen werden. Das Servlet kann diese sonst nicht an die Datenbank weiterleiten und richtig einordnen.
+\subsubsection{GMLController.java}
+***
+
+\subsubsection{KMLController.java}
+Wurden vom Servlet Geometriedaten im Format KML empfangen, werden diese an die Klasse KMLController weitergeleitet und die Funktion addKMLObject() aufgerufen. Hier werden die eigentlich Geometriedaten als Argument übergeben. Es wird innerhalb der Funktion überprüft, ob es sich bei den Daten um ein Polygon, Point oder Linestring handelt. Sollte keines dieser Bezeichnungen enthalten sein, wird eine IllegalArgumentException geworfen. Andersfalls wird nun der Funktion addGeometry() die Geometriedaten und der jeweilige String "Polygon", "Point" oder "Linestring" überreicht. In addGeometry() wird die SQL-Query zusammengesetzt und die Geometrie wird in der OHDM-Datenbank in die Tabelle für Polygone, Points oder Linestrings eingefügt. Nach Einfügen der Geometrie wird die zugewiesene ID zurückgegeben und an das Servlet geleitet.
+
+\section{Probleme}
+Zur Umwandlung der Geometriedaten aus den einzelnen Formaten wird ein PostGis-JDBC-Treiber genutzt. Ein häufig aufgetretener Fehler war eine Exception, die geworfen wurde, da die Funktionen ST\_GeomFromGeoJSON, \\ST\_GeomFromGML und ST\_GeomFromKML nicht existieren. Die ist auf eine fehlerhafte Version des JDBC-Treibers zurück zu führen. Bei Auftreten dieses Fehlers muss sichergestellt werden, dass die Version 1.3.3 genutzt wird.\\
+\\
+
+Desweiteren wird ein PostGreSQL-JDBC-Treiber genutzt. Damit zusammenhängend trat vermehrt ein NoSuchMethodError unter dem Pfad target/Imprts-1.0-SNAPSHOT/WEB-INF/lib/ auf. Dieses Problem konnte, durch Löschung der PostGreSQL-Dependency und des entsprechenden Eintrags in der pom.xml-Datei, behoben werden.\\
+\\
+
+Bei der Nutzung der Funktionen ST\_GeomFromGeoJSON, ST\_GeomFromGML und ST\_GeomFromKML werden nur eine Tags wie "Point", "Coordinates", andere Tags können nicht genutzt werden, da sonst eine Exception geworfen wird. Wichtig ist, dass in das Textfeld der Importer-Webseite nur korrekte Daten in den zur Verfügung stehenden Formaten eingetragen werden. Das Servlet kann diese sonst nicht an die Datenbank weiterleiten und richtig einordnen.
 
 \section{Nutzung}
 \subsection{Code}
-Der Code unseres Projekts lässt sich unter https://github.com/OpenHistoricalDataMap/Importer finden. Zur Programmierung wurde Java genutzt, und die Webseite wurde mit HTML erstellt.
+Der Code unseres Projekts lässt sich unter https://github.com/\\OpenHistoricalDataMap/Importer finden. Zur Programmierung wurde Java genutzt, und die Webseite wurde mit HTML erstellt.
 
 \subsection{Deployment / Runtime}
 
