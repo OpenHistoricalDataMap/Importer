@@ -2,9 +2,13 @@ import java.sql.*;
 
 public class GeoJSONController {
 
-    static String schema = GisConn.schema;
-
-    public static long addGeoJSONGeoObject(String geom) throws SQLException
+    ImportServlet servlet;
+    
+    public GeoJSONController(ImportServlet servlet)
+    {
+        this.servlet=servlet;
+    }
+    public long addGeoJSONGeoObject(String geom) throws SQLException
     {
         long id;
         
@@ -14,12 +18,14 @@ public class GeoJSONController {
             //System.out.println("<gml:Polygon>"+geomSplitTwo[0]+"</gml:Polygon>\n"+geomSplitTwo[0]);
             //id=addGeometry("<gml:Polygon>"+geomSplitTwo[0]+"</gml:Polygon>", "polygon");
             id=addGeometry(geom, "polygon");
+            servlet.setTypeTarget(3);
         
         }else if(geom.contains("LineString")){
             String[] geomSplitOne = geom.split("<gml:LineString>");
             String[] geomSplitTwo = geomSplitOne[1].split("</gml:LineString>");
             System.out.println("<gml:Point>"+geomSplitTwo[0]+"</gml:LineString>\n"+geomSplitTwo[0]);
             id=addGeometry("<gml:LineString>"+geomSplitTwo[0]+"</gml:LineString>", "line");
+            servlet.setTypeTarget(2);
         
         }else if(geom.contains("Point")){       
             //String[] geomSplitOne = geom.split("<gml:Point>");
@@ -27,6 +33,7 @@ public class GeoJSONController {
             //System.out.println("<gml:Point>"+geomSplitTwo[0]+"</gml:Point>\n"+geomSplitTwo[0]);
             //id=addGeometry("<gml:Point>"+geomSplitTwo[0]+"</gml:Point>", "point");
             id=addGeometry(geom, "point");
+            servlet.setTypeTarget(1);
 
             
         }else{
@@ -40,13 +47,13 @@ public class GeoJSONController {
     }
     
     
-    private static long addGeometry(String geom, String type) throws SQLException
+    private long addGeometry(String geom, String type) throws SQLException
     {
         PreparedStatement statement;
         long id;
         
-        statement = GisConn.conn.prepareStatement("INSERT INTO "+schema+".\""+type+"s\" (source_user_id, "+type+")\n"
-                + "VALUES (100," + " ST_GeomFromGeoJSON('" + geom + "'));", Statement.RETURN_GENERATED_KEYS);
+        statement = GisConn.conn.prepareStatement("INSERT INTO "+GisConn.schema+".\""+type+"s\" (source_user_id, "+type+")\n"
+                + "VALUES ("+ImportServlet.userID+"," + " ST_GeomFromGeoJSON('" + geom + "'));", Statement.RETURN_GENERATED_KEYS);
             
         int affectedRows = statement.executeUpdate();
 

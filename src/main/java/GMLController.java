@@ -2,48 +2,51 @@ import java.sql.*;
 
 public class GMLController {
 
-    static String schema = GisConn.schema;
-
-    public static long addGMLGeoObject(String geom) throws SQLException
+    ImportServlet servlet;
+    
+    public GMLController(ImportServlet servlet)
+    {
+        this.servlet=servlet;
+    }
+    public long addGMLGeoObject(String geom) throws SQLException
     {
         long id;
         
-        if(geom.contains("<gml:Polygon>")){           
-            String[] geomSplitOne = geom.split("<gml:Polygon>");
-            String[] geomSplitTwo = geomSplitOne[1].split("</gml:Polygon>");
+        if(geom.matches("(?s).*<gml.Polygon[^>]*>.*")){           
+            String[] geomSplitOne = geom.split("<gml:Polygon[^>]*>");
+            String[] geomSplitTwo = geomSplitOne[1].split("</gml:Polygon[^>]*>");
             System.out.println("<gml:Polygon>"+geomSplitTwo[0]+"</gml:Polygon>\n"+geomSplitTwo[0]);
             id=addGeometry("<gml:Polygon>"+geomSplitTwo[0]+"</gml:Polygon>", "polygon");
+            servlet.setTypeTarget(3);
         
-        }else if(geom.contains("<gml:LineString>")){
-            String[] geomSplitOne = geom.split("<gml:LineString>");
-            String[] geomSplitTwo = geomSplitOne[1].split("</gml:LineString>");
-            System.out.println("<gml:Point>"+geomSplitTwo[0]+"</gml:LineString>\n"+geomSplitTwo[0]);
+        }else if(geom.matches("(?s).*<gml:LineString[^>]*>.*")){
+            String[] geomSplitOne = geom.split("<gml:LineString[^>]*>");
+            String[] geomSplitTwo = geomSplitOne[1].split("</gml:LineString[^>]*>");
+            System.out.println("<gml:LineString>"+geomSplitTwo[0]+"</gml:LineString>\n"+geomSplitTwo[0]);
             id=addGeometry("<gml:LineString>"+geomSplitTwo[0]+"</gml:LineString>", "line");
+            servlet.setTypeTarget(2);
         
-        }else if(geom.contains("<gml:Point>")){       
-            String[] geomSplitOne = geom.split("<gml:Point>");
-            String[] geomSplitTwo = geomSplitOne[1].split("</gml:Point>");
+        }else if(geom.matches("(?s).*<gml:Point[^>]*>.*")){       
+            String[] geomSplitOne = geom.split("<gml:Point[^>]*>");
+            String[] geomSplitTwo = geomSplitOne[1].split("</gml:Point[^>]*>");
             System.out.println("<gml:Point>"+geomSplitTwo[0]+"</gml:Point>\n"+geomSplitTwo[0]);
             id=addGeometry("<gml:Point>"+geomSplitTwo[0]+"</gml:Point>", "point");
+            servlet.setTypeTarget(1);
             
         }else{
             throw new IllegalArgumentException();
-        }
-        
-        System.out.println(id);
-        
-        
+        }             
         return id;
     }
     
     
-    private static long addGeometry(String geom, String type) throws SQLException
+    private long addGeometry(String geom, String type) throws SQLException
     {
         PreparedStatement statement;
         long id;
         
-        statement = GisConn.conn.prepareStatement("INSERT INTO "+schema+".\""+type+"s\" (source_user_id, "+type+")\n"
-                + "VALUES (100," + " ST_GeomFromGML('" + geom + "'));", Statement.RETURN_GENERATED_KEYS);
+        statement = GisConn.conn.prepareStatement("INSERT INTO "+GisConn.schema+".\""+type+"s\" (source_user_id, "+type+")\n"
+                + "VALUES ("+ImportServlet.userID+"," + " ST_GeomFromGML('" + geom + "'));", Statement.RETURN_GENERATED_KEYS);
             
         int affectedRows = statement.executeUpdate();
 

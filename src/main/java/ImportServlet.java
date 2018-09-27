@@ -20,6 +20,30 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ImportServlet extends HttpServlet {
 
+    public static final long userID=100;     
+    
+    //Point, LineString, Polygon id
+    private long idTarget=-1;
+    //1 for Point, 2 for LineString, 3 for Polygon
+    private int typeTarget=0;
+    //Description for the Geoobject
+    private long idGeoobjectSource=0;
+    //type of geoobject
+    private long classificationId=-1;
+    
+    /**
+     * @param i - 1 for Point, 2 for LineString, 3 for Polygon
+     */
+    public void setTypeTarget(int i)
+    {
+        if(i<1||3<i)
+        {
+            throw new IllegalArgumentException();
+        }else{
+            typeTarget=i;
+        }
+    }
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,44 +63,47 @@ public class ImportServlet extends HttpServlet {
             String name = request.getParameter("name");
             String validSince = request.getParameter("begindate");
             String validUntil = request.getParameter("enddate");
+
+            
+
             
             try {
-                GisConn.setConn();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                Logger.getLogger(ImportServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch(Exception e){
-                    e.printStackTrace();
-                    }
+                
+            GisConn.setConn();
             
-            long id=-1;
-            
-            try {
             switch (format) {
                 case "kml":
             {
-                
-                    id=KMLController.addKMLGeoObject(geom);
+                    KMLController kml = new KMLController(this);
+                    idTarget=kml.addKMLGeoObject(geom);
                 
             }
                     break;
                 case "gml":
-                    id=GMLController.addGMLGeoObject(geom);
+                    GMLController gml = new GMLController(this);
+                    idTarget=gml.addGMLGeoObject(geom);
                     break;
                 case "json":
-                    id=GeoJSONController.addGeoJSONGeoObject(geom);
+                    GeoJSONController json = new GeoJSONController(this);
+                    idTarget=json.addGeoJSONGeoObject(geom);
                     break;
             } 
+            
+            DatabaseController databaseController = new DatabaseController();
+            idGeoobjectSource=databaseController.addGeoObject(name);
+            
+            long id = databaseController.addGeoObjectGeometry(idTarget, typeTarget, idGeoobjectSource, classificationId, validSince, validUntil);
+            
+            out.println(idTarget+"\n"+typeTarget+"\n"+idGeoobjectSource+"\n"+id);
+
+            
             } catch (SQLException ex) {
                     Logger.getLogger(ImportServlet.class.getName()).log(Level.SEVERE, null, ex);
-                                GisConn.closeConn();
-
-                }
-            finally
-            {
-            GisConn.closeConn();
+                    GisConn.closeConn();       
             }
-            out.println(id);
+            
+
+            
             //response.sendRedirect("index.html");
         }
         
