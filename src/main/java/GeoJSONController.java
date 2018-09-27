@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GeoJSONController {
 
@@ -12,27 +14,40 @@ public class GeoJSONController {
     {
         long id;
         
-        if(geom.contains("Polygon")){           
-            //String[] geomSplitOne = geom.split("<gml:Polygon>");
-            //String[] geomSplitTwo = geomSplitOne[1].split("</gml:Polygon>");
-            //System.out.println("<gml:Polygon>"+geomSplitTwo[0]+"</gml:Polygon>\n"+geomSplitTwo[0]);
-            //id=addGeometry("<gml:Polygon>"+geomSplitTwo[0]+"</gml:Polygon>", "polygon");
-            id=addGeometry(geom, "polygon");
+        if(geom.matches("(?s).*\"type\": \"Polygon\".*")){  
+            
+            final String regex = "(?s)\\\"type\\\":\\s*\\\"Polygon\\\",\\s*\"coordinates\":\\s*\\[(\\s*\\[[^\\]]*],?)*\\s*]\\s*]";
+            final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+            final Matcher matcher = pattern.matcher(geom);
+
+            if (matcher.find()) {
+                geom = matcher.group(0);
+            }
+            System.out.println("{"+geom+"}");
+            id=addGeometry("{"+geom+"}", "polygon");
             servlet.setTypeTarget(3);
         
-        }else if(geom.contains("LineString")){
-            String[] geomSplitOne = geom.split("<gml:LineString>");
-            String[] geomSplitTwo = geomSplitOne[1].split("</gml:LineString>");
-            System.out.println("<gml:Point>"+geomSplitTwo[0]+"</gml:LineString>\n"+geomSplitTwo[0]);
-            id=addGeometry("<gml:LineString>"+geomSplitTwo[0]+"</gml:LineString>", "line");
+        }else if(geom.matches("(?s).*\"type\": \"LineString\".*")){
+            final String regex = "(?s)\\\"type\\\":\\s*\\\"LineString\\\",\\s*\"coordinates\":\\s*\\[(\\s*\\[[^\\]]*],?)*\\s*]";
+            final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+            final Matcher matcher = pattern.matcher(geom);
+
+            if (matcher.find()) {
+                geom = matcher.group(0);
+            }
+            System.out.println("{"+geom+"}");
+            id=addGeometry("{"+geom+"}", "point");
             servlet.setTypeTarget(2);
         
-        }else if(geom.contains("Point")){       
-            //String[] geomSplitOne = geom.split("<gml:Point>");
-            //String[] geomSplitTwo = geomSplitOne[1].split("</gml:Point>");
-            //System.out.println("<gml:Point>"+geomSplitTwo[0]+"</gml:Point>\n"+geomSplitTwo[0]);
-            //id=addGeometry("<gml:Point>"+geomSplitTwo[0]+"</gml:Point>", "point");
-            id=addGeometry(geom, "point");
+        }else if(geom.matches("(?s).*\"type\": \"Point\".*")){       
+            final String regex = "(?s)\"type\": \"Point\"[^\\]]*]";
+            final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+            final Matcher matcher = pattern.matcher(geom);
+
+            if (matcher.find()) {
+                geom = matcher.group(0);
+            }
+            id=addGeometry("{"+geom+"}", "point");
             servlet.setTypeTarget(1);
 
             
