@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Importer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<hr>
+	Zum Import bitte Info eingeben:
+	<br />
+	<hr />
+	<form method="Post" name="Import" action="ImportServlet">
+		Format:
+                <select size="1" id="slt_format" name="formats">
+			<option value="blank" selected></option>
+			<option value="json">JSON</option>
+			<option value="kml">KML</option>
+			<option value="gml">GML</option>
+		</select>
+                <br>
+		Name:<textarea class="input" name="name" rows="1" cols="25"></textarea>
+		<br/>
+                <br>
+                Datum: g&uuml;ltig von <input type="date" name="begindate" required> bis <input type="date" name="enddate" required>
+                <br/>
+                <br>
+                Klassifikation: 
+                <select name="classification">
+                    <option value="-1">no_class</option>
+                    <option value="1">Boundary</option>
+                    <option value="10">OHDM_Boundary</option>
+                    <option value="22">Shop</option>
+                    <option value="159">Amenity</option>
+                    <option value="262">Craft</option>
+                    <option value="319">Emergency</option>
+                    <option value="334">Tourism</option>
+                    <option value="361">Office</option>
+                    <option value="395">Public_Transport</option>
+                    <option value="400">Building</option>
+                    <option value="449">Geological</option>
+                    <option value="453">Barrier</option>
+                    <option value="462">Landuse</option>
+                    <option value="494">Military</option>
+                    <option value="509">Power</option>
+                    <option value="527">Railway</option>
+                    <option value="555">Highway</option>
+                    <option value="600">Leisure</option>
+                    <option value="630">Historic</option>
+                    <option value="658">Natural</option>
+                    <option value="692">Man_made</option>
+                    <option value="743">Waterway</option>
+                    <option value="761">Aerialway</option>
+                    <option value="777">Places</option>
+                    <option value="803">Route</option>
+                    <option value="825">Sport</option>
+                    <option value="911">Aeroway</option>
+                </select>
+                </br>
+		<br>
+		Geometrie: <textarea class="input" name="geom" rows="15" cols="50"></textarea>
+		<br/> 
+                <input id="sub" type="submit" value="submit" /> <input id="res" type="reset"
+			value="reset" />
+	</form>
+	<script>
+		function inputFunction() {
+			var selected_index = oForm.elements["formats"].selectedIndex;
+			
+			if(selected_index > 0)	{
+				var selected_option_value = oForm.elements["formats"].options[selected_index].value;
+				var selected_option_text = oForm.elements["formats"].options[selected_index].text;
+			}
+			else
+			{
+				alert('Please select a country from the drop down list');
+			}
+		}
+	</script>
+</body>
+</html>

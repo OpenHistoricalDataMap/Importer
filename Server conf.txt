@@ -1,2 +1,0 @@
-https://gist.github.com/bjornharrtell/3054462
-https://stackoverflow.com/questions/24565301/hibernate-spatial-and-postgis-with-wildfly-8
