@@ -61,10 +61,9 @@ public class ImportServlet extends HttpServlet {
             String geom = request.getParameter("geom");
             String format = request.getParameter("formats");
             String name = request.getParameter("name");
+            String classification = request.getParameter("classification");
             String validSince = request.getParameter("begindate");
             String validUntil = request.getParameter("enddate");
-
-            
 
             
             try {
@@ -73,11 +72,8 @@ public class ImportServlet extends HttpServlet {
             
             switch (format) {
                 case "kml":
-            {
                     KMLController kml = new KMLController(this);
                     idTarget=kml.addKMLGeoObject(geom);
-                
-            }
                     break;
                 case "gml":
                     GMLController gml = new GMLController(this);
@@ -87,7 +83,94 @@ public class ImportServlet extends HttpServlet {
                     GeoJSONController json = new GeoJSONController(this);
                     idTarget=json.addGeoJSONGeoObject(geom);
                     break;
-            } 
+            }
+            
+            switch (classification) {
+                case "no_class":
+                    classificationId= -1;
+                    break;
+                case "boundary":
+                    classificationId=1;
+                    break;
+                case "ohdm_boundary":
+                    classificationId=10;
+                    break;
+                case "shop":
+                    classificationId=22;
+                    break;
+                case "amenity":
+                    classificationId=159;
+                    break;
+                case "craft":
+                    classificationId=262;
+                    break;
+                case "emergency":
+                    classificationId=319;
+                    break;
+                case "tourism":
+                    classificationId=334;
+                    break;
+                case "office":
+                    classificationId=361;
+                    break;
+                case "public_transport":
+                    classificationId=395;
+                    break;
+                case "building":
+                    classificationId=400;
+                    break;
+                case "geological":
+                    classificationId=449;
+                    break;
+                case "barrier":
+                    classificationId=453;
+                    break;
+                case "landuse":
+                    classificationId=462;
+                    break;
+                case "military":
+                    classificationId=494;
+                    break;
+                case "power":
+                    classificationId=509;
+                    break;
+                case "railway":
+                    classificationId=527;
+                    break;
+                case "highway":
+                    classificationId=555;
+                    break;
+                case "leisure":
+                    classificationId=600;
+                    break;
+                case "historic":
+                    classificationId=630;
+                    break;
+                case "natural":
+                    classificationId=658;
+                    break;
+                case "man_made":
+                    classificationId=692;
+                    break;
+                case "waterway":
+                    classificationId=743;
+                    break;
+                case "aerialway":
+                    classificationId=761;
+                    break;
+                case "places":
+                    classificationId=777;
+                    break;
+                case "route":
+                    classificationId=803;
+                    break;
+                case "sport":
+                    classificationId=825;
+                    break;
+                case "aeroway":
+                    classificationId=911;
+                    break;
+            }
             
             DatabaseController databaseController = new DatabaseController();
             idGeoobjectSource=databaseController.addGeoObject(name);
