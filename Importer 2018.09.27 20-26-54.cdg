@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Importer">
+  <ClassDiagramComponents>
+    <Class name="DatabaseController" package="" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="addGeoObject" returnType="long" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="addGeoObjectGeometry" returnType="long" visibility="public">
+          <Argument type="long" name="idTarget"/>
+          <Argument type="int" name="typeTarget"/>
+          <Argument type="long" name="idGeoObjectSource"/>
+          <Argument type="long" name="classificationId"/>
+          <Argument type="String" name="validSince"/>
+          <Argument type="String" name="validUntil"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="GeoJSONController" package="" visibility="public" xPosition="542.0" yPosition="197.0">
+      <Fields>
+        <Field name="servlet" type="ImportServlet" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ImportServlet" name="servlet"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="addGeoJSONGeoObject" returnType="long" visibility="public">
+          <Argument type="String" name="geom"/>
+        </Method>
+        <Method name="addGeometry" returnType="long" visibility="private">
+          <Argument type="String" name="geom"/>
+          <Argument type="String" name="type"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="GisConn" package="" visibility="public" xPosition="429.0" yPosition="385.0">
+      <Fields>
+        <Field name="host" type="String" visibility="package" isStatic="true"/>
+        <Field name="db" type="String" visibility="package" isStatic="true"/>
+        <Field name="schema" type="String" visibility="package" isStatic="true"/>
+        <Field name="user" type="String" visibility="package" isStatic="true"/>
+        <Field name="pass" type="String" visibility="package" isStatic="true"/>
+        <Field name="conn" type="Connection" visibility="public" isStatic="true"/>
+        <Field name="showSQL" type="boolean" visibility="public" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="setConn" returnType="void" visibility="public" isStatic="true"/>
+        <Method name="closeConn" returnType="void" visibility="public" isStatic="true"/>
+        <Method name="getClassificationID" returnType="int" visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="value"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="GMLController" package="" visibility="public" xPosition="765.0" yPosition="410.0">
+      <Fields>
+        <Field name="servlet" type="ImportServlet" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ImportServlet" name="servlet"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="addGMLGeoObject" returnType="long" visibility="public">
+          <Argument type="String" name="geom"/>
+        </Method>
+        <Method name="addGeometry" returnType="long" visibility="private">
+          <Argument type="String" name="geom"/>
+          <Argument type="String" name="type"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ImportServlet" package="" visibility="public" xPosition="874.0" yPosition="20.0">
+      <Fields>
+        <Field name="userID" type="long" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="idTarget" type="long" visibility="private"/>
+        <Field name="typeTarget" type="int" visibility="private"/>
+        <Field name="idGeoobjectSource" type="long" visibility="private"/>
+        <Field name="classificationId" type="long" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="setTypeTarget" returnType="void" visibility="public">
+          <Argument type="int" name="i"/>
+        </Method>
+        <Method name="processRequest" returnType="void" visibility="protected">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="doGet" returnType="void" visibility="protected">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="doPost" returnType="void" visibility="protected">
+          <Argument type="HttpServletRequest" name="request"/>
+          <Argument type="HttpServletResponse" name="response"/>
+        </Method>
+        <Method name="getServletInfo" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="KMLController" package="" visibility="public" xPosition="1072.0" yPosition="410.0">
+      <Fields>
+        <Field name="servlet" type="ImportServlet" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ImportServlet" name="servlet"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="addKMLGeoObject" returnType="long" visibility="public">
+          <Argument type="String" name="geom"/>
+        </Method>
+        <Method name="addGeometry" returnType="long" visibility="private">
+          <Argument type="String" name="geom"/>
+          <Argument type="String" name="type"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="servlet" source="GMLController" target="ImportServlet" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="servlet" source="KMLController" target="ImportServlet" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="servlet" source="GeoJSONController" target="ImportServlet" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
