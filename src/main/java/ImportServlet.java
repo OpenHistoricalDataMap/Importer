@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ImportServlet extends HttpServlet {
 
+    //bitte korrecte userID eintragen
     public static final long userID=100;     
     
     //Point, LineString, Polygon id
